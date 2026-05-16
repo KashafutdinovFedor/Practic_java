@@ -2,7 +2,7 @@ import java.util.Scanner; // Импортируем инструмент для 
 
 public class input_output_Practic_1 {
     public static void main(String[] args) {
-        // Создаем объект сканера, который "слушает" входной поток (System.in)
+        // Создаем объект сканера, который "слушает" входной поток
         Scanner sc = new Scanner(System.in);
 
         System.out.print("Введите ваше имя: ");
