@@ -1,0 +1,67 @@
+Имеет ли внутренний класс доступ к полям и методам внешнего класса?
+Да, имеет. Внутренний класс (inner class) имеет доступ ко всем членам (полям и методам)
+ своего внешнего класса, включая те, которые объявлены как private. Это возможно потому,
+ что экземпляр внутреннего класса всегда логически связан с конкретным экземпляром внешнего класса.
+
+
+ Как возможность доступа зависит от спецификаторов доступа?
+ Для самого внутреннего класса при обращении к членам внешнего класса спецификаторы доступа не играют роли.
+    Внутренний класс "видит" всё содержимое внешнего класса:
+ public — доступно.
+ protected — доступно.
+ default (package-private) — доступно.
+ private — доступно.
+
+ Важно отметить обратное: внешний класс также имеет доступ к приватным членам своего внутреннего класса,
+ но для этого ему нужно создать объект этого внутреннего класса.
+
+
+ В этом примере внутренний класс Inner напрямую обращается к приватному полю outerSecret.
+ public class Outer {
+     private String outerSecret = "Секрет внешнего класса";
+
+     class Inner {
+         void display() {
+             // Прямой доступ к приватному полю внешнего класса
+             System.out.println("Внутренний класс прочитал: " + outerSecret);
+         }
+     }
+
+     public void test() {
+         Inner inner = new Inner();
+         inner.display();
+     }
+
+     public static void main(String[] args) {
+         Outer outer = new Outer();
+         outer.test();
+     }
+ }
+
+ Если во внутреннем классе есть поле с таким же именем, как во внешнем, используется синтаксис ИмяВнешнегоКласса.this.
+ public class Apartment {
+     private String address = "ул. Ленина, д. 10";
+
+     class Room {
+         private String address = "Комната №5";
+
+         void printAddresses() {
+             System.out.println("Локальный адрес: " + this.address);
+             System.out.println("Адрес всего здания: " + Apartment.this.address);
+         }
+     }
+ }
+
+
+ Внешний класс может обращаться к private данным внутреннего класса через его экземпляр.
+ public class Hospital {
+     class Patient {
+         private String diagnosis = "Здоров";
+     }
+
+     public void checkPatient() {
+         Patient p = new Patient();
+         // Внешний класс видит private поле внутреннего класса
+         System.out.println("Диагноз пациента: " + p.diagnosis);
+     }
+ }
